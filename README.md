@@ -551,21 +551,21 @@ GET /api/health
 | 🇲🇽 Mexico | 🇨🇦 Canada | 🇧🇷 Brazil | 🇺🇸 USA |
 | 🇿🇦 South Africa | 🇨🇭 Switzerland | 🇲🇦 Morocco | 🇵🇾 Paraguay |
 | 🇰🇷 South Korea | 🇶🇦 Qatar | 🇭🇹 Haiti | 🇦🇺 Australia |
-| TBD | TBD | 🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland | TBD |
+| CZ Czech Republic | BA Bosnia and Herzegovina  | 🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland | TR Turkiye |
 
 | Group E | Group F | Group G | Group H |
 |---------|---------|---------|---------|
 | 🇩🇪 Germany | 🇳🇱 Netherlands | 🇧🇪 Belgium | 🇪🇸 Spain |
 | 🇨🇼 Curaçao | 🇯🇵 Japan | 🇪🇬 Egypt | 🇨🇻 Cape Verde |
 | 🇨🇮 Ivory Coast | 🇹🇳 Tunisia | 🇮🇷 Iran | 🇸🇦 Saudi Arabia |
-| 🇪🇨 Ecuador | TBD | 🇳🇿 New Zealand | 🇺🇾 Uruguay |
+| 🇪🇨 Ecuador | SE Sweden | 🇳🇿 New Zealand | 🇺🇾 Uruguay |
 
 | Group I | Group J | Group K | Group L |
 |---------|---------|---------|---------|
 | 🇫🇷 France | 🇦🇷 Argentina | 🇵🇹 Portugal | 🏴󠁧󠁢󠁥󠁮󠁧󠁿 England |
 | 🇸🇳 Senegal | 🇩🇿 Algeria | 🇨🇴 Colombia | 🇭🇷 Croatia |
 | 🇳🇴 Norway | 🇦🇹 Austria | 🇺🇿 Uzbekistan | 🇬🇭 Ghana |
-| TBD | 🇯🇴 Jordan | TBD | 🇵🇦 Panama |
+| IQ Iraq | 🇯🇴 Jordan | CD Congo DR | 🇵🇦 Panama |
 
 ---
 
