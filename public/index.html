@@ -1697,50 +1697,52 @@
                     <!-- Donation Form -->
                     <div class="donate-form-card">
                         <h4>💰 <span data-i18n="donate_amount">مبلغ کمک (دلار)</span></h4>
-                        
-                        <div class="amount-buttons">
-                            <button class="amount-btn selected" data-amount="5">$5</button>
-                            <button class="amount-btn" data-amount="10">$10</button>
-                            <button class="amount-btn" data-amount="25">$25</button>
-                            <button class="amount-btn" data-amount="50">$50</button>
-                            <button class="amount-btn" data-amount="100">$100</button>
-                        </div>
-                        
-                        <div class="custom-amount">
-                            <label data-i18n="donate_custom">یا مبلغ دلخواه (5 تا 100 دلار):</label>
-                            <div class="amount-input-wrapper">
-                                <span>$</span>
-                                <input type="number" id="customAmount" min="5" max="100" placeholder="5" value="5">
-                            </div>
-                        </div>
-                        
-                        <div class="donor-info">
-                            <input type="text" id="donorName" data-i18n-placeholder="donate_name_ph" placeholder="نام شما (اختیاری)">
-                            <input type="email" id="donorEmail" data-i18n-placeholder="donate_email_ph" placeholder="ایمیل (اختیاری)">
-                            <textarea id="donorMessage" data-i18n-placeholder="donate_message_ph" placeholder="پیام شما (اختیاری)"></textarea>
-                        </div>
-                        
-                        <button class="donate-btn" id="donateBtn" onclick="createDonation()">
-                            <span>🎁</span>
-                            <span data-i18n="donate_btn">حمایت با کریپتو</span>
-                        </button>
-                        
-                        <div class="crypto-badge">
-                            <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT">
-                            <span>USDT - <span data-i18n="donate_fast">سریع و کم هزینه</span></span>
-                        </div>
 
-                        <!-- Network Selection -->
+                        <!-- Wallet Addresses -->
                         <div style="margin-top: 15px;">
-                            <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 8px;" data-i18n="select_network">انتخاب شبکه:</label>
-                            <div class="amount-buttons" id="networkButtons">
-                                <button class="amount-btn selected" data-network="trc20" onclick="selectNetwork('trc20')">TRC20</button>
-                                <button class="amount-btn" data-network="bep20" onclick="selectNetwork('bep20')">BEP20</button>
-                                <button class="amount-btn" data-network="erc20" onclick="selectNetwork('erc20')">ERC20</button>
+                            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; margin-bottom: 12px;">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                    <img src="https://cryptologos.cc/logos/tron-trx-logo.png" alt="TRON" style="width: 20px; height: 20px;">
+                                    <span style="font-weight: 600; font-size: 0.9rem;">TRC20 (TRON)</span>
+                                    <span style="color: #4CAF50; font-size: 0.75rem; background: rgba(76,175,80,0.1); padding: 2px 8px; border-radius: 4px;">Recommended</span>
+                                </div>
+                                <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px; font-family: monospace; font-size: 0.8rem; word-break: break-all; color: #D4AF37; cursor: pointer;" onclick="copyWallet('TH1cqV6bmZcmtV3SWDtH1N1roCEcAGpB7V')" title="Click to copy">
+                                    TH1cqV6bmZcmtV3SWDtH1N1roCEcAGpB7V
+                                </div>
+                                <button onclick="copyWallet('TH1cqV6bmZcmtV3SWDtH1N1roCEcAGpB7V')" style="margin-top: 8px; background: rgba(139,21,56,0.3); border: 1px solid rgba(139,21,56,0.5); color: #fff; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">📋 <span data-i18n="payment_copy">کپی آدرس</span></button>
+                            </div>
+
+                            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; margin-bottom: 12px;">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                    <img src="https://cryptologos.cc/logos/bnb-bnb-logo.png" alt="BNB" style="width: 20px; height: 20px;">
+                                    <span style="font-weight: 600; font-size: 0.9rem;">BEP20 (BNB Smart Chain)</span>
+                                </div>
+                                <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px; font-family: monospace; font-size: 0.8rem; word-break: break-all; color: #D4AF37; cursor: pointer;" onclick="copyWallet('0xD492E850a67346b96C1F6107CC06E3132aAEec9A')" title="Click to copy">
+                                    0xD492E850a67346b96C1F6107CC06E3132aAEec9A
+                                </div>
+                                <button onclick="copyWallet('0xD492E850a67346b96C1F6107CC06E3132aAEec9A')" style="margin-top: 8px; background: rgba(139,21,56,0.3); border: 1px solid rgba(139,21,56,0.5); color: #fff; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">📋 <span data-i18n="payment_copy">کپی آدرس</span></button>
+                            </div>
+
+                            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; margin-bottom: 12px;">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                    <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="ETH" style="width: 20px; height: 20px;">
+                                    <span style="font-weight: 600; font-size: 0.9rem;">ERC20 (Ethereum)</span>
+                                </div>
+                                <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px; font-family: monospace; font-size: 0.8rem; word-break: break-all; color: #D4AF37; cursor: pointer;" onclick="copyWallet('0xD492E850a67346b96C1F6107CC06E3132aAEec9A')" title="Click to copy">
+                                    0xD492E850a67346b96C1F6107CC06E3132aAEec9A
+                                </div>
+                                <button onclick="copyWallet('0xD492E850a67346b96C1F6107CC06E3132aAEec9A')" style="margin-top: 8px; background: rgba(139,21,56,0.3); border: 1px solid rgba(139,21,56,0.5); color: #fff; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">📋 <span data-i18n="payment_copy">کپی آدرس</span></button>
+                            </div>
+
+                            <div style="background: rgba(255,165,0,0.1); border: 1px solid rgba(255,165,0,0.2); border-radius: 8px; padding: 10px; margin-top: 10px;">
+                                <span style="font-size: 0.8rem; color: #FFA726;">⚠️ <span data-i18n="payment_warning_text">فقط USDT روی شبکه انتخابی ارسال کنید. ارسال سایر ارزها باعث از دست رفتن دارایی می‌شود.</span></span>
                             </div>
                         </div>
-
+                    
                         <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                            <a href="https://buymeacoffee.com/rahiminia" target="_blank" rel="noreferrer noopener" style="display: inline-block; margin-bottom: 15px;">
+                                <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 50px; border-radius: 8px; transition: transform 0.2s ease;">
+                            </a>
                             <p style="color: var(--text-muted); margin-bottom: 12px; font-size: 0.9rem;" data-i18n="donate_or">یا از طریق NOWPayments:</p>
                             <a href="https://nowpayments.io/donation?api_key=ebc9f078-46a5-413b-a28e-8b4737ec4d18" target="_blank" rel="noreferrer noopener">
                                 <img src="https://nowpayments.io/images/embeds/donation-button-black.svg" alt="Crypto donation button by NOWPayments" style="max-width: 220px; transition: transform 0.2s ease; border-radius: 8px;">
@@ -2475,6 +2477,21 @@
             document.getElementById('paymentModal').classList.remove('active');
             document.body.style.overflow = '';
             loadRecentDonations(); // Reload donations
+        }
+        
+        // Copy wallet address from donate section
+        function copyWallet(address) {
+            navigator.clipboard.writeText(address).then(() => {
+                showToast(translations[currentLang].copied, 'success');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = address;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast(translations[currentLang].copied, 'success');
+            });
         }
         
         // Copy wallet address
