@@ -1,7 +1,7 @@
 require('dotenv').config();
-const mongoose = require('./database');
-const Game = require('./models/game');
-const Team = require('./models/team');
+const mongoose = require('../database');
+const Game = require('../models/game');
+const Team = require('../models/team');
 const fs = require('fs');
 
 async function importMatches() {
@@ -19,7 +19,7 @@ async function importMatches() {
         
         console.log('Reading matches file...');
         const matchesData = JSON.parse(
-            fs.readFileSync('./football.matches.json', 'utf8')
+            fs.readFileSync('../data/football.matches.json', 'utf8')
         );
         
         console.log(`Found ${matchesData.length} matches to import`);

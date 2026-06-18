@@ -1,6 +1,6 @@
 require('dotenv').config();
-const mongoose = require('./database');
-const Group = require('./models/group');
+const mongoose = require('../database');
+const Group = require('../models/group');
 const fs = require('fs');
 
 async function importMatchTables() {
@@ -18,7 +18,7 @@ async function importMatchTables() {
         
         console.log('Reading match tables file...');
         const matchTablesData = JSON.parse(
-            fs.readFileSync('./football.matchtables.json', 'utf8')
+            fs.readFileSync('../data/football.matchtables.json', 'utf8')
         );
         
         console.log(`Found ${matchTablesData.length} groups to import`);

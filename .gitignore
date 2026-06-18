@@ -13,3 +13,4 @@ build/
 
 # MongoDB user creation script (contains passwords)
 create-mongodb-user.js
+**/.puku/

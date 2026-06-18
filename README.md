@@ -8,15 +8,15 @@
 [![MongoDB](https://img.shields.io/badge/MongoDB-6.x-green?logo=mongodb)](https://www.mongodb.com/)
 [![Swagger](https://img.shields.io/badge/Swagger-OpenAPI%203.0-orange?logo=swagger)](https://swagger.io/)
 [![License](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE)
-[![API Version](https://img.shields.io/badge/API%20Version-1.0.5-blue)]()
-[![API Status](https://img.shields.io/badge/API-Live-brightgreen)](https://worldcup26.ir)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/rezarahiminia/worldcup2026/pulls)
+[![API Version](https://img.shields.io/badge/API%20Version-1.0.5-blue)](https://dekhoprime.live)
+[![API Status](https://img.shields.io/badge/API-Live-brightgreen)](https://wc26.dekhoprime.live)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/imShakil/worldcup2026/pulls)
 
 > 🏆 **The first-ever 48-team FIFA World Cup — Free REST API with live scores, 104 matches, 16 stadiums, 12 groups, and real-time updates. No API key required for read access.**
 
 A comprehensive, **free and open-source** REST API providing real-time data for the **2026 FIFA World Cup**, hosted across **United States 🇺🇸, Mexico 🇲🇽 & Canada 🇨🇦**. Access teams, groups, matches, stadiums, live scores, and standings — perfect for developers building World Cup apps, dashboards, widgets, bots, and data visualizations.
 
-### 🎯 Why Use This API?
+## 🎯 Why Use This API?
 
 | Feature | Details |
 |---------|---------|
@@ -29,23 +29,23 @@ A comprehensive, **free and open-source** REST API providing real-time data for 
 | ⚡ **Fast** | Express.js + MongoDB + compression + caching |
 | 🔗 **REST + JSON** | Standard REST API — works with any language |
 
-### ⚡ Quick Example
+## ⚡ Quick Example
 
 ```bash
 # Get all World Cup 2026 matches (no auth needed for demo)
-curl https://worldcup26.ir/get/games
+curl https://wc26.dekhoprime.live/get/games
 
 # Get group standings
-curl https://worldcup26.ir/get/groups
+curl https://wc26.dekhoprime.live/get/groups
 
 # Get all 48 teams
-curl https://worldcup26.ir/get/teams
+curl https://wc26.dekhoprime.live/get/teams
 
 # Get all 16 stadiums
-curl https://worldcup26.ir/get/stadiums
+curl https://wc26.dekhoprime.live/get/stadiums
 ```
 
-> 📖 **Full documentation:** [worldcup26.ir/api-docs](https://worldcup26.ir/api-docs/)
+> 📖 **Full documentation:** [wc26.dekhoprime.live/api-docs](https://wc26.dekhoprime.live/api-docs/)
 
 ---
 
@@ -126,7 +126,7 @@ curl https://worldcup26.ir/get/stadiums
 
 ```bash
 # Clone the repository
-git clone https://github.com/rezarahiminia/worldcup2026.git
+git clone https://github.com/imShakil/worldcup2026.git
 
 # Navigate to project directory
 cd worldcup2026
@@ -246,7 +246,7 @@ This API includes full **interactive Swagger UI** documentation powered by OpenA
 | **Swagger Version** | OpenAPI 3.0 (`swagger-jsdoc` 6.x + `swagger-ui-express` 5.x) |
 | **API Version** | 1.0.5 |
 | **Dev URL** | [http://localhost:3050/api-docs/](http://localhost:3050/api-docs/) |
-| **Production (HTTPS)** | [https://worldcup26.ir/api-docs/](https://worldcup26.ir/api-docs/) |
+| **Production (HTTPS)** | [https://wc26.dekhoprime.live/api-docs/](https://wc26.dekhoprime.live/api-docs/) |
 
 ### How to Use Swagger UI
 
@@ -274,12 +274,14 @@ Authorization: Bearer YOUR_TOKEN
 ### 🔑 Auth Endpoints
 
 #### Register New User
+
 ```http
 POST /auth/register
 Content-Type: application/json
 ```
 
 **Request Body:**
+
 ```json
 {
   "name": "John Doe",
@@ -295,6 +297,7 @@ Content-Type: application/json
 | `password` | `string` | **Required**. User password (will be hashed) |
 
 **Success Response (200):**
+
 ```json
 {
   "user": {
@@ -308,6 +311,7 @@ Content-Type: application/json
 ```
 
 **Error Responses:**
+
 | Code | Message |
 |------|---------|
 | `400` | User already exists |
@@ -316,12 +320,14 @@ Content-Type: application/json
 ---
 
 #### Login / Authenticate
+
 ```http
 POST /auth/authenticate
 Content-Type: application/json
 ```
 
 **Request Body:**
+
 ```json
 {
   "email": "john@example.com",
@@ -335,6 +341,7 @@ Content-Type: application/json
 | `password` | `string` | **Required**. Account password |
 
 **Success Response (200):**
+
 ```json
 {
   "user": {
@@ -347,6 +354,7 @@ Content-Type: application/json
 ```
 
 **Error Responses:**
+
 | Code | Message |
 |------|---------|
 | `400` | User not found |
@@ -360,7 +368,7 @@ After successful login/registration, use the returned token for all API requests
 
 ```javascript
 // Example using fetch
-fetch('https://worldcup26.ir/get/teams', {
+fetch('https://wc26.dekhoprime.live/get/teams', {
   headers: {
     'Authorization': 'Bearer YOUR_JWT_TOKEN'
   }
@@ -370,7 +378,7 @@ fetch('https://worldcup26.ir/get/teams', {
 ```bash
 # Example using cURL
 curl -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  https://worldcup26.ir/get/teams
+  https://wc26.dekhoprime.live/get/teams
 ```
 
 > ⏰ **Token Expiry:** Tokens are valid for **84 days** (7,257,600 seconds). After expiration, you'll need to login again.
@@ -380,13 +388,16 @@ curl -H "Authorization: Bearer YOUR_JWT_TOKEN" \
 ### 👥 Team Endpoints
 
 #### Get All Teams
+
 ```http
 GET /get/teams
 Authorization: Bearer ${Token}
 ```
+
 Returns all 48 qualified teams for World Cup 2026.
 
 **Response Example:**
+
 ```json
 {
   "id": "37",
@@ -399,28 +410,34 @@ Returns all 48 qualified teams for World Cup 2026.
 ```
 
 #### Get Team by ID
+
 ```http
 GET /get/team/${teamId}
 Authorization: Bearer ${Token}
 ```
+
 | Parameter | Type | Description |
 |:----------|:-----|:------------|
 | `teamId` | `string` | **Required**. Unique team identifier |
 
 #### Get Team by Name
+
 ```http
 GET /get/team/?name=${teamName}
 Authorization: Bearer ${Token}
 ```
+
 | Parameter | Type | Description |
 |:----------|:-----|:------------|
 | `teamName` | `string` | Team name (English or Persian) |
 
 #### Get Teams by Group
+
 ```http
 GET /get/teams/?group=${groupName}
 Authorization: Bearer ${Token}
 ```
+
 | Parameter | Type | Description |
 |:----------|:-----|:------------|
 | `groupName` | `string` | Group letter (A-L) |
@@ -430,13 +447,16 @@ Authorization: Bearer ${Token}
 ### 📊 Group Endpoints
 
 #### Get All Groups
+
 ```http
 GET /get/groups
 Authorization: Bearer ${Token}
 ```
+
 Returns all 12 groups with standings table.
 
 **Response Example:**
+
 ```json
 {
   "group": "G",
@@ -450,19 +470,23 @@ Returns all 12 groups with standings table.
 ```
 
 #### Get Group by ID
+
 ```http
 GET /get/group/${groupId}
 Authorization: Bearer ${Token}
 ```
+
 | Parameter | Type | Description |
 |:----------|:-----|:------------|
 | `groupId` | `string` | **Required**. Group identifier |
 
 #### Get Group by Name
+
 ```http
 GET /get/group/?name=${groupName}
 Authorization: Bearer ${Token}
 ```
+
 | Parameter | Type | Description |
 |:----------|:-----|:------------|
 | `groupName` | `string` | Group letter (A, B, C... L) |
@@ -472,13 +496,16 @@ Authorization: Bearer ${Token}
 ### ⚽ Match Endpoints
 
 #### Get All Matches
+
 ```http
 GET /get/games
 Authorization: Bearer ${Token}
 ```
+
 Returns all 104 matches of the tournament.
 
 **Response Example:**
+
 ```json
 {
   "games": [
@@ -509,15 +536,18 @@ Returns all 104 matches of the tournament.
 ```
 
 #### Get Match by ID
+
 ```http
 GET /get/game/${matchId}
 Authorization: Bearer ${Token}
 ```
+
 | Parameter | Type | Description |
 |:----------|:-----|:------------|
 | `matchId` | `string` | **Required**. Match identifier (1–104) |
 
 **Response Example (Group Match):**
+
 ```json
 {
   "game": {
@@ -542,6 +572,7 @@ Authorization: Bearer ${Token}
 ```
 
 **Response Example (Knockout Match — teams TBD):**
+
 ```json
 {
   "game": {
@@ -599,13 +630,16 @@ The `type` field identifies the stage of each match. For knockout matches before
 ### 🏟️ Stadium Endpoints
 
 #### Get All Stadiums
+
 ```http
 GET /get/stadiums
 Authorization: Bearer ${Token}
 ```
+
 Returns all 16 host stadiums.
 
 **Response Example:**
+
 ```json
 {
   "id": "11",
@@ -623,12 +657,15 @@ Returns all 16 host stadiums.
 ### 🏥 Health Check Endpoints
 
 #### Health Status
+
 ```http
 GET /health
 ```
+
 No authentication required. Returns the health status of the API and database.
 
 **Response Example:**
+
 ```json
 {
   "status": "healthy",
@@ -648,6 +685,7 @@ No authentication required. Returns the health status of the API and database.
 ```
 
 **Alternative Endpoint:**
+
 ```http
 GET /api/health
 ```
@@ -658,7 +696,8 @@ GET /api/health
 
 > **⚡ During the FIFA World Cup 2026 tournament (June 11 — July 19, 2026), match scores and statistics will be updated in real-time!**
 
-### Live Data Includes:
+### Live Data Includes
+
 - ✅ Current match scores
 - ✅ Goal scorers with timestamps
 - ✅ Match status (upcoming, live, finished)
@@ -695,6 +734,7 @@ GET /api/health
 ## 🏟️ Host Stadiums
 
 ### 🇺🇸 United States (11 Venues)
+
 | Stadium | City | Capacity |
 |---------|------|----------|
 | MetLife Stadium | New York/New Jersey | 82,500 |
@@ -710,6 +750,7 @@ GET /api/health
 | Arrowhead Stadium | Kansas City | 73,000 |
 
 ### 🇲🇽 Mexico (3 Venues)
+
 | Stadium | City | Capacity |
 |---------|------|----------|
 | Estadio Azteca | Mexico City | 83,000 |
@@ -717,6 +758,7 @@ GET /api/health
 | Estadio BBVA | Monterrey | 53,500 |
 
 ### 🇨🇦 Canada (2 Venues)
+
 | Stadium | City | Capacity |
 |---------|------|----------|
 | BC Place | Vancouver | 54,000 |
@@ -769,9 +811,9 @@ This project is licensed under the ISC License — see the [LICENSE](LICENSE) fi
 
 ## 🔗 Related Links
 
-- 🌐 [Live Website](https://worldcup26.ir)
-- 📖 [API Swagger Docs](https://worldcup26.ir/api-docs/)
-- 💻 [GitHub Repository](https://github.com/rezarahiminia/worldcup2026)
+- 🌐 [Live Website](https://wc26.dekhoprime.live)
+- 📖 [API Swagger Docs](https://wc26.dekhoprime.live/api-docs/)
+- 💻 [GitHub Repository](https://github.com/imShakil/worldcup2026)
 - 🌐 [FIFA Official Website](https://www.fifa.com/fifaplus/en/tournaments/mens/worldcup/canadamexicousa2026)
 - 🏆 [World Cup 2026 Official](https://www.fifa.com/worldcup/)
 
@@ -781,23 +823,7 @@ This project is licensed under the ISC License — see the [LICENSE](LICENSE) fi
 
 This API is completely **free and open-source**. If you find it useful, consider supporting its development:
 
-<a href="https://buymeacoffee.com/rahiminia" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="50"></a>
-
-### 💰 Donate with USDT
-
-| Network | Address | Min Amount |
-|---------|---------|------------|
-| **TRC20** (TRON) | `TH1cqV6bmZcmtV3SWDtH1N1roCEcAGpB7V` | 1 USDT |
-| **BEP20** (BNB Smart Chain) | `0xD492E850a67346b96C1F6107CC06E3132aAEec9A` | 1 USDT |
-| **ERC20** (Ethereum) | `0xD492E850a67346b96C1F6107CC06E3132aAEec9A` | 1 USDT |
-
-> ⚠️ **Important:** Only send **USDT** on the correct network. Sending other assets will result in permanent loss.
-
-### Or via NOWPayments:
-
-<a href="https://nowpayments.io/donation?api_key=ebc9f078-46a5-413b-a28e-8b4737ec4d18" target="_blank" rel="noreferrer noopener">
-   <img src="https://nowpayments.io/images/embeds/donation-button-black.svg" alt="Crypto donation button by NOWPayments">
-</a>
+<a href="https://buymeacoffee.com/imshakil" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="50"></a>
 
 ---
 
@@ -809,6 +835,6 @@ For questions, issues, or suggestions, please open an issue on GitHub.
 
 ---
 
-<p align="center">
-  <b>Keywords:</b> FIFA World Cup 2026 API, free World Cup API, free football API, free soccer API, World Cup REST API, World Cup live scores API, live soccer scores API, free sports data API, open source football API, FIFA 2026 API, World Cup 2026 data, World Cup 2026 schedule API, World Cup 2026 fixtures, World Cup 2026 results, World Cup 2026 groups, World Cup 2026 standings, World Cup 2026 teams, World Cup 2026 stadiums, 48 team World Cup, Node.js football API, Express.js sports API, MongoDB sports database, Swagger OpenAPI sports, real-time match scores, World Cup bracket, soccer data API free, football data API, World Cup JSON data, USA Mexico Canada World Cup, World Cup developer API, sports API 2026, World Cup 2026 live results, free live score API, World Cup prediction API, football fixtures API, soccer standings API
-</p>
+## Keywords
+
+FIFA World Cup 2026 API, free World Cup API, free football API, free soccer API, World Cup REST API, World Cup live scores API, live soccer scores API, free sports data API, open source football API, FIFA 2026 API, World Cup 2026 data, World Cup 2026 schedule API, World Cup 2026 fixtures, World Cup 2026 results, World Cup 2026 groups, World Cup 2026 standings, World Cup 2026 teams, World Cup 2026 stadiums, 48 team World Cup, Node.js football API, Express.js sports API, MongoDB sports database, Swagger OpenAPI sports, real-time match scores, World Cup bracket, soccer data API free, football data API, World Cup JSON data, USA Mexico Canada World Cup, World Cup developer API, sports API 2026, World Cup 2026 live results, free live score API, World Cup prediction API, football fixtures API, soccer standings API
