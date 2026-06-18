@@ -20,13 +20,25 @@
  *   - data/team-name-map.json (Persian → English team names)
  */
 
-const { MongoClient } = require("mongodb");
 const fs = require("fs");
 const path = require("path");
+const mongoose = require('../database');
+const Game = require('../models/game');
+const Team = require('../models/team');
+const Group = require('../models/group');
 
-const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017";
-const DB_NAME = process.env.DB_NAME || "football";
 const POLL_INTERVAL = parseInt(process.env.POLL_INTERVAL || "3000");
+
+const isProd = process.env.NODE_ENV === 'production';
+console.log(`🔌 Connecting to MongoDB (${isProd ? 'Production' : 'Development'})...`);
+
+mongoose.connection.once('open', () => {
+    console.log("✅ Successful connection with MongoDB");
+});
+mongoose.connection.on('error', (err) => {
+    console.log('❌ Error: Connection to MongoDB not successful', err.message);
+    process.exit(1);
+});
 
 // Load mappings
 const TEAM_MAP = JSON.parse(fs.readFileSync(path.join(__dirname, "../data/team-name-map.json"), "utf8"));
@@ -91,8 +103,8 @@ async function fetchEvents(matchId) {
   } catch { return null; }
 }
 
-async function syncMatches(v3Matches, db) {
-  const teams = await db.collection("teams").find({}).toArray();
+async function syncMatches(v3Matches) {
+  const teams = await Team.find({}).lean();
   const teamByFa = {};
   for (const t of teams) teamByFa[t.name_fa] = t.id;
   for (const [fa, en] of Object.entries(TEAM_MAP)) {
@@ -100,7 +112,6 @@ async function syncMatches(v3Matches, db) {
     if (team) teamByFa[fa] = team.id;
   }
 
-  const matches = db.collection("matches");
   let updated = 0;
 
   for (const m of v3Matches) {
@@ -108,7 +119,7 @@ async function syncMatches(v3Matches, db) {
     const awayTeamId = teamByFa[m.guest?.name];
     if (!homeTeamId || !awayTeamId) continue;
 
-    const match = await matches.findOne({ home_team_id: homeTeamId, away_team_id: awayTeamId });
+    const match = await Game.findOne({ home_team_id: homeTeamId, away_team_id: awayTeamId });
     if (!match) continue;
 
     const newData = {
@@ -129,16 +140,16 @@ async function syncMatches(v3Matches, db) {
     if (match.home_score !== newData.home_score || match.away_score !== newData.away_score ||
         match.time_elapsed !== newData.time_elapsed || match.finished !== newData.finished ||
         match.home_scorers !== newData.home_scorers) {
-      await matches.updateOne({ _id: match._id }, { $set: newData });
+      await Game.updateOne({ _id: match._id }, { $set: newData });
       updated++;
     }
   }
   return updated;
 }
 
-async function updateStandings(db) {
-  const matches = await db.collection("matches").find({ finished: "TRUE", type: "group" }).toArray();
-  const teams = await db.collection("teams").find({}).toArray();
+async function updateStandings() {
+  const matches = await Game.find({ finished: "TRUE", type: "group" }).lean();
+  const teams = await Team.find({}).lean();
 
   const stats = {};
   for (const t of teams) {
@@ -164,7 +175,7 @@ async function updateStandings(db) {
     away.gd = away.gf - away.ga;
   }
 
-  const groups = await db.collection("groups").find({}).toArray();
+  const groups = await Group.find({}).lean();
   for (const g of groups) {
     const updatedTeams = g.teams.map(t => {
       const s = stats[t.team_id];
@@ -172,48 +183,54 @@ async function updateStandings(db) {
       return { team_id: t.team_id, mp: String(s.mp), w: String(s.w), d: String(s.d), l: String(s.l), pts: String(s.pts), gf: String(s.gf), ga: String(s.ga), gd: String(s.gd) };
     });
     updatedTeams.sort((a, b) => (parseInt(b.pts) - parseInt(a.pts)) || (parseInt(b.gd) - parseInt(a.gd)) || (parseInt(b.gf) - parseInt(a.gf)));
-    await db.collection("groups").updateOne({ _id: g._id }, { $set: { teams: updatedTeams } });
+    await Group.updateOne({ _id: g._id }, { $set: { teams: updatedTeams } });
   }
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 
+async function waitForConnection() {
+  if (mongoose.connection.readyState === 1) return;
+  await mongoose.connection.asPromise();
+}
+
 async function fullSync() {
   console.log("[auto-updater] Full sync starting...");
-  const client = new MongoClient(MONGO_URI);
-  try {
-    await client.connect();
-    const db = client.db(DB_NAME);
-    const allMatches = [];
-    for (const d of [-2, -1, 0, 1]) {
-      try { allMatches.push(...await fetchVarzesh3(d)); } catch {}
-    }
-    const updated = await syncMatches(allMatches, db);
-    await updateStandings(db);
-    console.log(`[auto-updater] Full sync done: ${updated} matches updated, standings recalculated`);
-  } finally { await client.close(); }
+  await waitForConnection();
+  const allMatches = [];
+  for (const d of [-2, -1, 0, 1]) {
+    try { allMatches.push(...await fetchVarzesh3(d)); } catch {}
+  }
+  const updated = await syncMatches(allMatches);
+  await updateStandings();
+  console.log(`[auto-updater] Full sync done: ${updated} matches updated, standings recalculated`);
 }
 
 let lastFinishedCount = 0;
 async function poll() {
-  const client = new MongoClient(MONGO_URI);
   try {
-    await client.connect();
-    const db = client.db(DB_NAME);
+    await waitForConnection();
     const todayMatches = await fetchVarzesh3(0);
-    await syncMatches(todayMatches, db);
+    await syncMatches(todayMatches);
 
     // Recalculate standings if a match just finished
-    const count = await db.collection("matches").countDocuments({ finished: "TRUE" });
+    const count = await Game.countDocuments({ finished: "TRUE" });
     if (count !== lastFinishedCount) {
       lastFinishedCount = count;
-      await updateStandings(db);
+      await updateStandings();
       console.log(`[auto-updater] Standings updated (${count} finished matches)`);
     }
-  } catch {} finally { await client.close(); }
+  } catch (err) {
+    console.error("[auto-updater] Poll error:", err.message);
+  }
 }
 
 console.log(`[auto-updater] Starting — polling every ${POLL_INTERVAL}ms`);
-fullSync().then(() => {
-  setInterval(poll, POLL_INTERVAL);
-});
+fullSync()
+  .then(() => {
+    setInterval(poll, POLL_INTERVAL);
+  })
+  .catch((err) => {
+    console.error("[auto-updater] Fatal startup error:", err.message);
+    process.exit(1);
+  });

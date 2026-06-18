@@ -14,7 +14,19 @@
     "import:teams": "node scripts/import-teams.js",
     "import:stadiums": "node scripts/import-stadiums.js",
     "import:matches": "node scripts/import-matches.js",
-    "test:load": "node load-test.js"
+    "test:load": "node load-test.js",
+    "pm2:start": "pm2 start ecosystem.config.cjs",
+    "pm2:start:prod": "pm2 start ecosystem.config.cjs --env production",
+    "pm2:stop": "pm2 stop ecosystem.config.cjs",
+    "pm2:restart": "pm2 restart ecosystem.config.cjs",
+    "pm2:reload": "pm2 reload ecosystem.config.cjs",
+    "pm2:delete": "pm2 delete ecosystem.config.cjs",
+    "pm2:status": "pm2 status",
+    "pm2:logs": "pm2 logs",
+    "pm2:logs:api": "pm2 logs wc-api",
+    "pm2:logs:updater": "pm2 logs wc-updater",
+    "pm2:save": "pm2 save",
+    "pm2:setup": "pm2 startup"
   },
   "keywords": [
     "fifa-world-cup-2026",

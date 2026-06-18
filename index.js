@@ -199,7 +199,7 @@ app.get('/', (req, res) => {
                 )
                 .replace(
                     /<link rel="canonical"[^>]*>/,
-                    '<link rel="canonical" href="https://worldcup26.ir/?lang=en">'
+                    '<link rel="canonical" href="https://wc26.dekhoprime.live/?lang=en">'
                 );
             res.setHeader('Content-Type', 'text/html; charset=utf-8');
             res.setHeader('Cache-Control', 'public, max-age=300');
