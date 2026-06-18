@@ -101,7 +101,7 @@ module.exports = {
       user: 'imshakil',
       host: ['34.87.84.134'],
       ref: 'origin/main',
-      repo: 'git@github.com:imShakil/worldcup2026.git',
+      repo: 'https://github.com/imShakil/worldcup2026.git',
       path: '/home/imshakil/worldcup2026',
       'pre-deploy-local': '',
       'post-deploy':
