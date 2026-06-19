@@ -108,7 +108,7 @@ module.exports = {
       path: '/home/imshakil/worldcup2026',
       'pre-deploy-local': '',
       'post-deploy':
-        'npm ci --omit=dev && ' +
+        'npm install && ' +
         'pm2 delete ecosystem.config.cjs || true && ' +
         'pm2 start ecosystem.config.cjs --env production && ' +
         'pm2 save',
