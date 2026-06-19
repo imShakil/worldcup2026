@@ -20,6 +20,10 @@
  *   - data/team-name-map.json (Persian → English team names)
  */
 
+// Load env first (sets process.env.MONGODB_URL, PORT, etc. from .env.${NODE_ENV})
+const { loadEnvConfig } = require('../config/env');
+loadEnvConfig();
+
 const fs = require("fs");
 const path = require("path");
 const mongoose = require('../database');
