@@ -19,7 +19,7 @@ async function importTeams() {
         
         console.log('Reading teams file...');
         const teamsData = JSON.parse(
-            fs.readFileSync('../data/football.teams.json', 'utf8')
+            fs.readFileSync('./data/football.teams.json', 'utf8')
         );
         
         console.log(`Found ${teamsData.length} teams to import`);

@@ -2,26 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- Homepage - Persian (default) -->
-  <url>
-    <loc>https://worldcup26.ir/</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="fa" href="https://worldcup26.ir/?lang=fa"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://worldcup26.ir/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://worldcup26.ir/"/>
-  </url>
-
-  <!-- Homepage - English -->
+  <!-- Homepage - English (default) -->
   <url>
     <loc>https://worldcup26.ir/?lang=en</loc>
     <lastmod>2026-06-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="fa" href="https://worldcup26.ir/?lang=fa"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://worldcup26.ir/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://worldcup26.ir/"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://worldcup26.ir/?lang=fa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://worldcup26.ir/?lang=en"/>
+  </url>
+
+  <!-- Homepage - Persian -->
+  <url>
+    <loc>https://worldcup26.ir/?lang=fa</loc>
+    <lastmod>2026-06-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://worldcup26.ir/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://worldcup26.ir/?lang=fa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://worldcup26.ir/?lang=en"/>
   </url>
 
   <!-- Matches section -->

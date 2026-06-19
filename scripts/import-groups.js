@@ -18,7 +18,7 @@ async function importMatchTables() {
         
         console.log('Reading match tables file...');
         const matchTablesData = JSON.parse(
-            fs.readFileSync('../data/football.matchtables.json', 'utf8')
+            fs.readFileSync('./data/football.matchtables.json', 'utf8')
         );
         
         console.log(`Found ${matchTablesData.length} groups to import`);

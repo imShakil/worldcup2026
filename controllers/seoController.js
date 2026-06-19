@@ -16,23 +16,23 @@ module.exports = (app) => {
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>https://wc26.dekhoprime.live/</loc>
-    <lastmod>${now}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="fa" href="https://wc26.dekhoprime.live/?lang=fa"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://wc26.dekhoprime.live/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://wc26.dekhoprime.live/"/>
-  </url>
-
-  <url>
     <loc>https://wc26.dekhoprime.live/?lang=en</loc>
     <lastmod>${now}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="fa" href="https://wc26.dekhoprime.live/?lang=fa"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://wc26.dekhoprime.live/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://wc26.dekhoprime.live/"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://wc26.dekhoprime.live/?lang=fa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://wc26.dekhoprime.live/?lang=en"/>
+  </url>
+
+  <url>
+    <loc>https://wc26.dekhoprime.live/?lang=fa</loc>
+    <lastmod>${now}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://wc26.dekhoprime.live/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://wc26.dekhoprime.live/?lang=fa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://wc26.dekhoprime.live/?lang=en"/>
   </url>
 
   <url>
