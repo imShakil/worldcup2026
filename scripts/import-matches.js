@@ -4,13 +4,24 @@ const Game = require('../models/game');
 const Team = require('../models/team');
 const fs = require('fs');
 
+// Wait for the Mongoose connection to be fully ready (readyState 1 = connected)
+function waitForConnection() {
+    return new Promise((resolve, reject) => {
+        if (mongoose.connection.readyState === 1) {
+            return resolve();
+        }
+        mongoose.connection.once('open', resolve);
+        mongoose.connection.once('error', reject);
+        setTimeout(() => reject(new Error('MongoDB connection timeout')), 15000);
+    });
+}
+
 async function importMatches() {
     try {
-        console.log('Connecting to MongoDB...');
-        
-        // Wait for connection
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
+        console.log('Waiting for MongoDB connection...');
+        await waitForConnection();
+        console.log('✅ MongoDB connected');
+
         console.log('Clearing existing games...');
         // Drop the games collection
         await mongoose.connection.db.dropCollection('games').catch(() => {
@@ -19,7 +30,7 @@ async function importMatches() {
         
         console.log('Reading matches file...');
         const matchesData = JSON.parse(
-            fs.readFileSync('../data/football.matches.json', 'utf8')
+            fs.readFileSync('./data/football.matches.json', 'utf8')
         );
         
         console.log(`Found ${matchesData.length} matches to import`);

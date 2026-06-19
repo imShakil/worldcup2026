@@ -32,6 +32,10 @@ const Team = require('../models/team');
 const Group = require('../models/group');
 
 const POLL_INTERVAL = parseInt(process.env.POLL_INTERVAL || "3000");
+const MAX_MATCH_ID = parseInt(process.env.MAX_MATCH_ID || "17");
+// Initial full-sync sweeps this many days back from today to cover older matches.
+// The recurring poll() only fetches day 0 (today) for live updates.
+const SYNC_DAYS_BACK = parseInt(process.env.SYNC_DAYS_BACK || "10");
 
 const isProd = process.env.NODE_ENV === 'production';
 console.log(`🔌 Connecting to MongoDB (${isProd ? 'Production' : 'Development'})...`);
@@ -126,6 +130,9 @@ async function syncMatches(v3Matches) {
     const match = await Game.findOne({ home_team_id: homeTeamId, away_team_id: awayTeamId });
     if (!match) continue;
 
+    // Only sync the first N matches (defaults to 17) — skip everything else
+    if (parseInt(match.id) > MAX_MATCH_ID) continue;
+
     const newData = {
       home_score: String(m.goals?.host ?? match.home_score),
       away_score: String(m.goals?.guest ?? match.away_score),
@@ -202,7 +209,10 @@ async function fullSync() {
   console.log("[auto-updater] Full sync starting...");
   await waitForConnection();
   const allMatches = [];
-  for (const d of [-2, -1, 0, 1]) {
+  // Sweep [-SYNC_DAYS_BACK .. +1] so older matches still get back-filled on startup.
+  const offsets = [];
+  for (let d = -SYNC_DAYS_BACK; d <= 1; d++) offsets.push(d);
+  for (const d of offsets) {
     try { allMatches.push(...await fetchVarzesh3(d)); } catch {}
   }
   const updated = await syncMatches(allMatches);
