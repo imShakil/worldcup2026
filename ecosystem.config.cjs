@@ -40,14 +40,20 @@ module.exports = {
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
       merge_logs: true,
 
-      // Env (use --env production to switch)
+      // Env is intentionally NOT pinned here.
+      //
+      // `config/env.js` already loads `.env.${NODE_ENV}` via dotenv, and
+      // pm2-start's `env_` map would otherwise OVERRIDE the .env file —
+      // meaning any real change to MONGODB_URL / PORT / secrets in
+      // .env.production would silently do nothing on the server.
+      //
+      // Switch environments with:  pm2 start ecosystem.config.cjs --env production
+      // PM2 will set NODE_ENV=production; the rest comes from .env.production.
       env: {
-        NODE_ENV: 'development',
-        PORT: 3050
+        NODE_ENV: 'development'
       },
       env_production: {
-        NODE_ENV: 'production',
-        PORT: 3050
+        NODE_ENV: 'production'
       }
     },
 
@@ -77,18 +83,15 @@ module.exports = {
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
       merge_logs: true,
 
-      // Auto-updater env. MONGODB_URL is the single source of truth for the
-      // connection string AND the database name (matches the API server).
-      // POLL_INTERVAL controls how often we hit Varzesh3.
+      // Same rationale as wc-api above: do NOT pin MONGODB_URL / POLL_INTERVAL
+      // here. They come from .env.development / .env.production, so the API
+      // and the updater read from a single source of truth and can never
+      // drift onto different databases.
       env: {
-        NODE_ENV: 'development',
-        MONGODB_URL: 'mongodb://127.0.0.1:27017/worldcup2026',
-        POLL_INTERVAL: 3000
+        NODE_ENV: 'development'
       },
       env_production: {
-        NODE_ENV: 'production',
-        MONGODB_URL: 'mongodb://127.0.0.1:27017/worldcup2026',
-        POLL_INTERVAL: 3000
+        NODE_ENV: 'production'
       }
     }
   ],
