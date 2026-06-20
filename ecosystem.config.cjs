@@ -40,20 +40,19 @@ module.exports = {
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
       merge_logs: true,
 
-      // Env is intentionally NOT pinned here.
+      // Env defaults to production so a bare `pm2 start ecosystem.config.cjs`
+      // (no --env flag) does the right thing on the prod VM. `config/env.js`
+      // already loads `.env.${NODE_ENV}` via dotenv, so we intentionally do
+      // NOT pin MONGODB_URL / PORT / secrets here — only NODE_ENV, otherwise
+      // pm2-start's env_ map would override the .env file and real changes
+      // to MONGODB_URL in .env.production would silently do nothing.
       //
-      // `config/env.js` already loads `.env.${NODE_ENV}` via dotenv, and
-      // pm2-start's `env_` map would otherwise OVERRIDE the .env file —
-      // meaning any real change to MONGODB_URL / PORT / secrets in
-      // .env.production would silently do nothing on the server.
-      //
-      // Switch environments with:  pm2 start ecosystem.config.cjs --env production
-      // PM2 will set NODE_ENV=production; the rest comes from .env.production.
+      // Switch to development with:  pm2 start ecosystem.config.cjs --env development
       env: {
-        NODE_ENV: 'development'
-      },
-      env_production: {
         NODE_ENV: 'production'
+      },
+      env_development: {
+        NODE_ENV: 'development'
       }
     },
 
@@ -88,10 +87,10 @@ module.exports = {
       // and the updater read from a single source of truth and can never
       // drift onto different databases.
       env: {
-        NODE_ENV: 'development'
-      },
-      env_production: {
         NODE_ENV: 'production'
+      },
+      env_development: {
+        NODE_ENV: 'development'
       }
     }
   ],

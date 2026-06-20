@@ -24,7 +24,18 @@ const MONGODB_CONFIG = isProd ? {
     }
 };
 
-console.log(`🔌 Connecting to MongoDB (${isProd ? 'Production' : 'Development'})...`);
+// Defer the "Connecting" log until mongoose actually starts dialing, so the
+// label matches the env that `loadEnvConfig` resolved to (not whatever was
+// in process.env at the moment this module was first required). This also
+// removes the duplicate "Connecting" line that happened when both the .once
+// listener and the .then() on mongoose.connect() fired.
+let didLogConnect = false;
+function logConnecting() {
+  if (didLogConnect) return;
+  didLogConnect = true;
+  const prod = process.env.NODE_ENV === 'production';
+  console.log(`🔌 Connecting to MongoDB (${prod ? 'Production' : 'Development'}) — ${MONGODB_CONFIG.url}`);
+}
 
 mongoose.connect(MONGODB_CONFIG.url, MONGODB_CONFIG.options)
 .then(() => {
@@ -33,6 +44,8 @@ mongoose.connect(MONGODB_CONFIG.url, MONGODB_CONFIG.options)
     console.log('❌ Error: Connection to MongoDB not successful', err.message);
     process.exit(1);
 });
+
+mongoose.connection.on('connecting', logConnecting);
 
 mongoose.Promise = global.Promise;
 
