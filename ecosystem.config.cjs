@@ -3,7 +3,7 @@
  *
  * Manages two long-running processes:
  *   1. api            - the Express API server (index.js)
- *   2. auto-updater   - the live data updater that polls Varzesh3 and writes to MongoDB
+ *   2. auto-updater   - the live data updater that polls football-data.org and writes to MongoDB
  *
  * Usage:
  *   npm install -g pm2
