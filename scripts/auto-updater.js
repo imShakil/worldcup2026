@@ -338,15 +338,23 @@ async function poll() {
     const dateTo = isoDate(new Date(Date.now() + 24 * 60 * 60 * 1000));
     const dateFrom = isoDate(new Date(Date.now() - SYNC_DAYS_BACK * 24 * 60 * 60 * 1000));
     const matches = await fetchFootballData({ dateFrom, dateTo });
-    await syncMatches(matches);
+    const updatedCount = await syncMatches(matches);
 
     // Recalculate standings if a match just finished
     const count = await Game.countDocuments({ finished: "TRUE" });
+    let standingsUpdated = false;
     if (count !== lastFinishedCount) {
       lastFinishedCount = count;
       await updateStandings();
+      standingsUpdated = true;
       console.log(`[auto-updater] Standings updated (${count} finished matches)`);
     }
+
+    // Heartbeat: log every successful poll so `pm2 logs wc-updater` shows
+    // steady activity even when nothing changed — that's how you verify the
+    // 15s cadence is actually running. Without this line, a healthy quiet
+    // day looks identical to a hung process.
+    console.log(`[auto-updater] Poll tick — fetched ${matches.length} match(es), updated ${updatedCount}${standingsUpdated ? ', standings recalculated' : ''}`);
 
     // Success: reset backoff
     if (consecutiveFailures > 0) {

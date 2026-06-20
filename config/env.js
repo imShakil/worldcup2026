@@ -64,7 +64,7 @@ function loadEnvConfig() {
 
     // football-data.org v4 (live match data source for auto-updater)
     // https://www.football-data.org/client/register — free tier: 10 req/min.
-    FOOTBALL_DATA_TOKEN: process.env.FOOTBALL_DATA_TOKEN || '738975e1f3324baf80887a2b0e8367c4',
+    FOOTBALL_DATA_TOKEN: process.env.FOOTBALL_DATA_TOKEN || '',
     FOOTBALL_DATA_BASE_URL: process.env.FOOTBALL_DATA_BASE_URL || 'https://api.football-data.org/v4',
 
     // Logging
