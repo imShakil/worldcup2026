@@ -28,6 +28,7 @@ const Game = require('../models/game');
 const Team = require('../models/team');
 const Group = require('../models/group');
 const { config } = require('../config/env');
+const { resolveBracket } = require('./resolve-bracket');
 
 const POLL_INTERVAL = parseInt(process.env.POLL_INTERVAL || "15000");
 const MAX_MATCH_ID = parseInt(process.env.MAX_MATCH_ID || "104");
@@ -319,7 +320,8 @@ async function fullSync() {
   }
   const updated = await syncMatches(matches);
   await updateStandings();
-  console.log(`[auto-updater] Full sync done: ${updated} matches updated, standings recalculated (${matches.length} matches in window ${dateFrom} → ${dateTo})`);
+  const bracket = await resolveBracket();
+  console.log(`[auto-updater] Full sync done: ${updated} matches updated, standings recalculated, bracket resolved (${bracket.resolved} new, ${bracket.skipped} waiting) — ${matches.length} matches in window ${dateFrom} → ${dateTo}`);
 }
 
 let lastFinishedCount = 0;
@@ -343,18 +345,28 @@ async function poll() {
     // Recalculate standings if a match just finished
     const count = await Game.countDocuments({ finished: "TRUE" });
     let standingsUpdated = false;
+    let bracketUpdated = false;
     if (count !== lastFinishedCount) {
       lastFinishedCount = count;
       await updateStandings();
       standingsUpdated = true;
       console.log(`[auto-updater] Standings updated (${count} finished matches)`);
+      // Resolve bracket placeholders ("Winner Group A", "Winner Match 73", …)
+      // now that standings/results are fresh. Safe to re-run on every tick
+      // — it only writes when both sides resolve and current ids are still
+      // the "0" placeholder.
+      const bracket = await resolveBracket();
+      if (bracket.resolved > 0) {
+        bracketUpdated = true;
+        console.log(`[auto-updater] Bracket resolved (${bracket.resolved} match(es), ${bracket.skipped} still waiting)`);
+      }
     }
 
     // Heartbeat: log every successful poll so `pm2 logs wc-updater` shows
     // steady activity even when nothing changed — that's how you verify the
     // 15s cadence is actually running. Without this line, a healthy quiet
     // day looks identical to a hung process.
-    console.log(`[auto-updater] Poll tick — fetched ${matches.length} match(es), updated ${updatedCount}${standingsUpdated ? ', standings recalculated' : ''}`);
+    console.log(`[auto-updater] Poll tick — fetched ${matches.length} match(es), updated ${updatedCount}${standingsUpdated ? ', standings recalculated' : ''}${bracketUpdated ? ', bracket filled' : ''}`);
 
     // Success: reset backoff
     if (consecutiveFailures > 0) {
